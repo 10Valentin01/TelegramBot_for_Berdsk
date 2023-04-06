@@ -1,6 +1,6 @@
 import sqlite3
 class Database:
-    def __init__(self, path_to_db='test_new.db'):
+    def __init__(self, path_to_db='test_1.db'):
         self.path_to_db = path_to_db
 
     @property
@@ -31,6 +31,7 @@ class Database:
         id int NOT NULL,
         name varchar(255) NOT NULL,
         phone varchar(255),
+        topic varchar(255),
         application varchar(255),
         PRIMARY KEY (id)
         );
@@ -39,7 +40,7 @@ class Database:
 
 
     def add_user(self, id:int, name: str, email: str=None):
-        sql = "INSERT INTO Users(id, name, email) VALUES  (?, ?, ?)"
+        sql = "INSERT INTO Users(id, name, phone, topic, application) VALUES  (?, ?, ?, ?, ?)"
         parameters = (id, name, email)
         self.execute(sql, parameters=parameters, commit=True)
 

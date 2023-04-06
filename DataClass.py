@@ -30,8 +30,8 @@ class Database:
         CREATE TABLE Users(
         id int NOT NULL,
         name varchar(255) NOT NULL,
-        email varchar(255),
         phone varchar(255),
+        application varchar(255),
         PRIMARY KEY (id)
         );
         """
@@ -43,17 +43,13 @@ class Database:
         parameters = (id, name, email)
         self.execute(sql, parameters=parameters, commit=True)
 
-    def update_row(self,row):
-        sql = f'ALTER TABLE Users ADD {row} VARCHAR(50)'
-        parametrs = (row)
-        self.execute(sql, parameters=parametrs, commit=True)
-
     @staticmethod
     def format_args(sql, parameters: dict):
         sql += " AND ".join([
             f'{item} = ?' for item in parameters
         ])
         return sql, tuple(parameters.values())
+
     def  select_all_users(self):
         sql = "SELECT * FROM Users"
         return self.execute(sql, fetchall=True)
@@ -65,10 +61,6 @@ class Database:
 
     def count_users(self):
         return self.execute("SELECT COUNT(*) FROM Users;", fetchone=True)
-
-    def update_email(self, email, id):
-        sql = "UPDATE Users SET email=? WHERE id=?"
-        return self.execute(sql, parameters=(email, id), commit=True)
 
     def update_phone_number(self, phone, id):
         sql = 'UPDATE Users SET phone=? WHERE id=?'

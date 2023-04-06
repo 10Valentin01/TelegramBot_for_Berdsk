@@ -29,7 +29,9 @@ class Database:
         sql = """
         CREATE TABLE Users(
         id int NOT NULL,
-        name varchar(255) NOT NULL,
+        num_app varchar(255),
+        name varchar(255),
+        address varchar(255),
         phone varchar(255),
         topic varchar(255),
         application varchar(255),
@@ -39,7 +41,7 @@ class Database:
         return self.execute(sql)
 
 
-    def add_user(self, id:int, name: str, email: str=None):
+    def add_app(self, app: str, id:int, name: str, email: str=None):
         sql = "INSERT INTO Users(id, name, phone, topic, application) VALUES  (?, ?, ?, ?, ?)"
         parameters = (id, name, email)
         self.execute(sql, parameters=parameters, commit=True)
